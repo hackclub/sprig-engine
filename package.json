@@ -1,7 +1,7 @@
 {
 	"name": "sprig",
 	"version": "1.0.0",
-	"description": "The standalone Sprig game engine.",
+	"description": "The standalone Sprig game engine",
 	"main": "dist/api.js",
 	"types": "dist/api.d.ts",
 	"scripts": {
