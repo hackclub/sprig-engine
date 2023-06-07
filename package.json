@@ -1,6 +1,6 @@
 {
 	"name": "sprig",
-	"version": "0.2.3",
+	"version": "1.0.0",
 	"description": "The standalone Sprig game engine.",
 	"main": "dist/api.js",
 	"types": "dist/api.d.ts",
@@ -41,6 +41,7 @@
 		"README.md",
 		"LICENSE",
 		"dist/",
+		"src/",
 		"base.js",
 		"base.d.ts",
 		"image-data.js",
