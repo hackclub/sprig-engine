@@ -52,7 +52,7 @@ If you're into that kind of thing, this also comes with full TypeScript types in
 </script>
 ```
 
-(See [examples/simple-game.html](https://github.com/hackclub/sprig-engine/blob/main/examples/simple-game.html) for a full example.)
+(See [examples/simple-game.html](https://github.com/hackclub/sprig-engine/blob/main/examples/simple-game.html) for a full example. [See this deployed live!](https://hackclub.github.io/sprig-engine/examples/simple-game.html))
 
 ### Node.js and bundlers
 
