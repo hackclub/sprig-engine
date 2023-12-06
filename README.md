@@ -372,7 +372,7 @@ const tuneToText: (tune: Tune) => string
 ```ts
 type ImageDataEngineAPI = BaseEngineAPI & Pick<FullSprigAPI, 'onInput' | 'afterInput' | 'setLegend' | 'setBackground' | 'setTimeout' | 'setInterval' | 'playTune'>
 const imageDataEngine: () => { api: ImageDataEngineAPI; render(): ImageData; button(key: "w" | "s" | "a" | "d" | "i" | "j" | "k" | "l"): void; cleanup(): void; state: GameState; }
-const bitmapTextToImageData: (text: string) => ImageData
+const bitmapTextToImageData: (key: string, text: string) => ImageData
 ```
 
 ### sprig/web

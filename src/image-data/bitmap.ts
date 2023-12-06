@@ -1,11 +1,11 @@
 import { palette } from '../base/index.js'
 
 // At odds with in-game behavior... doesn't enforce a size with stretching.
-export const bitmapTextToImageData = (text: string): ImageData => {
+export const bitmapTextToImageData = (key: string, text: string): ImageData => {
   const rows = text.trim().split("\n").map(x => x.trim())
   const rowLengths = rows.map(x => x.length)
   const isRect = rowLengths.every(val => val === rowLengths[0])
-  if (!isRect) throw new Error("Level must be rect.")
+  if (!isRect) throw new Error(`Bitmap with key ${key} is not rectangular.`);
   const width = rows[0]!.length || 1
   const height = rows.length || 1
   const data = new Uint8ClampedArray(width*height*4)
