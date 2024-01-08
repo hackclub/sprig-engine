@@ -1,5 +1,6 @@
 import type { AddTextOptions, FullSprigAPI, GameState, SpriteType } from '../api.js'
 import { palette } from './palette.js'
+import { composeText } from './text.js'
 
 export * from './font.js'
 export * from './palette.js'
@@ -224,12 +225,16 @@ export function baseEngine(): { api: BaseEngineAPI, state: GameState } {
 		if (Array.isArray(opts.color)) throw new Error('addText no longer takes an RGBA color. Please use a Sprig color instead with \"{ color: color`` }\"')
 		const [, rgba ] = palette.find(([key]) => key === opts.color) ?? palette.find(([key]) => key === 'L')!
 
-		gameState.texts.push({
+		const textOptions = {
 			x: opts.x ?? padLeft,
 			y: opts.y ?? 0,
 			color: rgba,
 			content: str
-		})
+		};
+
+		composeText([textOptions]);
+
+		gameState.texts.push(textOptions);
 	}
 
 	const clearText = (): void => { gameState.texts = [] }
