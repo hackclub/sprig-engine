@@ -106,7 +106,7 @@ export function webEngine(canvas: HTMLCanvasElement): {
 
 		for (let i = 0; i < bitmaps.length; i++) {
 			const [ key, value ] = bitmaps[i]!
-			const imgData = bitmapTextToImageData(value)
+			const imgData = bitmapTextToImageData(key, value)
 			const littleCanvas = makeCanvas(16, 16)
 			littleCanvas.getContext('2d')!.putImageData(imgData, 0, 0)
 			_bitmaps[key] = littleCanvas

@@ -54,7 +54,7 @@ export const imageDataEngine = (): {
 			game.state.legend = bitmaps
 			legendImages = {}
 			for (const [ id, desc ] of bitmaps)
-				legendImages[id] = bitmapTextToImageData(desc)
+				legendImages[id] = bitmapTextToImageData(id, desc)
 		},
 		setBackground: (kind: string) => background = kind,
 		setTimeout: (fn: TimerHandler, ms: number) => {
