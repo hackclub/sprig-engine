@@ -18,6 +18,16 @@ export type WebEngineAPI = BaseEngineAPI & Pick<
 	getState(): GameState // For weird backwards-compatibility reasons, not part of API
 }
 
+const SPRITE_CACHE_SIZE = 64;
+const spriteCache: Map<string, CanvasImageSource> = new Map();
+
+function updateSpriteCache(key: string, value: CanvasImageSource) {
+	spriteCache.set(key, value);
+	if (spriteCache.size > SPRITE_CACHE_SIZE) {
+		spriteCache.delete(spriteCache.keys().next().value);
+	}
+}
+
 export function webEngine(canvas: HTMLCanvasElement): {
 	api: WebEngineAPI,
 	state: GameState,
@@ -106,10 +116,20 @@ export function webEngine(canvas: HTMLCanvasElement): {
 
 		for (let i = 0; i < bitmaps.length; i++) {
 			const [ key, value ] = bitmaps[i]!
+
+			// If possible, use a cached sprite canvas object
+			if (spriteCache.has(value)) {
+				const littleCanvas = spriteCache.get(value)!;
+				_bitmaps[key] = littleCanvas;
+				continue;
+			}
+
 			const imgData = bitmapTextToImageData(key, value)
 			const littleCanvas = makeCanvas(16, 16)
 			littleCanvas.getContext('2d')!.putImageData(imgData, 0, 0)
 			_bitmaps[key] = littleCanvas
+
+			updateSpriteCache(value, littleCanvas);
 		}
 	}
 

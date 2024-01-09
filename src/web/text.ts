@@ -2,9 +2,10 @@ import type { TextElement } from '../api.js'
 import { font, composeText } from '../base/index.js'
 import { makeCanvas } from './util.js'
 
+const img = new ImageData(160, 128)
+
 export const getTextImg = (texts: TextElement[]): CanvasImageSource => {
 	const charGrid = composeText(texts)
-	const img = new ImageData(160, 128)
 	img.data.fill(0)
 
 	for (const [i, row] of Object.entries(charGrid)) {
