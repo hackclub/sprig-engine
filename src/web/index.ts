@@ -126,7 +126,7 @@ export function webEngine(canvas: HTMLCanvasElement): {
 	const afterInputs: (() => void)[] = []
 
 	const keydown = (e: KeyboardEvent) => {
-		const key = e.key
+		const key = e.key.toLowerCase();
 		if (!VALID_INPUTS.includes(key as any)) return
 
 		for (const validKey of VALID_INPUTS)
