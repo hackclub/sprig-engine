@@ -1,5 +1,7 @@
 import { palette } from '../base/index.js'
 
+const uInt8Cache: Map<string, Uint8ClampedArray> = new Map(); 
+
 // At odds with in-game behavior... doesn't enforce a size with stretching.
 export const bitmapTextToImageData = (key: string, text: string): ImageData => {
   const rows = text.trim().split("\n").map(x => x.trim())
@@ -8,7 +10,14 @@ export const bitmapTextToImageData = (key: string, text: string): ImageData => {
   if (!isRect) throw new Error(`Bitmap with key ${key} is not rectangular.`);
   const width = rows[0]!.length || 1
   const height = rows.length || 1
-  const data = new Uint8ClampedArray(width*height*4)
+
+  // If possible, use a cached Uint8ClampedArray
+  const cacheKey = width + ',' + height;
+  const data = uInt8Cache.get(cacheKey) ?? new Uint8ClampedArray(width*height*4)
+  data.fill(0)
+
+  // Add the Uint8ClampedArray to the cache if it doesn't already exist
+  if (!uInt8Cache.has(cacheKey)) uInt8Cache.set(cacheKey, data);
   
   const colors = Object.fromEntries(palette)
   
