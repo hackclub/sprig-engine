@@ -18,6 +18,16 @@ export type WebEngineAPI = BaseEngineAPI & Pick<
 	getState(): GameState // For weird backwards-compatibility reasons, not part of API
 }
 
+const getCookie = (name: string): string | null => {
+	if (typeof document !== 'undefined') {
+	  const matches = document.cookie.match(
+		new RegExp(`(^| )${name}=([^;]+)`)
+	  );
+	  return matches ? decodeURIComponent(matches[2] || '') : null;
+	}
+	return null;
+  };
+
 export function webEngine(canvas: HTMLCanvasElement): {
 	api: WebEngineAPI,
 	state: GameState,
@@ -124,13 +134,32 @@ export function webEngine(canvas: HTMLCanvasElement): {
 		l: []
 	}
 	const afterInputs: (() => void)[] = []
+	const keyBindings = JSON.parse(getCookie('keyBindings') || '{}');
+	console.log(keyBindings)
+	if(Object.keys(keyBindings).length === 0) {
+		document.cookie = `keyBindings=${JSON.stringify({
+			w: 'w',
+			s: 's',
+			a: 'a',
+			d: 'd',
+			i: 'i',
+			j: 'j',
+			k: 'k',
+			l: 'l'
+		})}; expires=Fri, 31 Dec 9999 23:59:59 GMT`
+	}
+	const reverseKeyBindings = Object.fromEntries(
+		Object.entries(keyBindings).map(([k, v]) => [v, k])
+	)
 
 	const keydown = (e: KeyboardEvent) => {
-		const key = e.key.toLowerCase();
-		if (!VALID_INPUTS.includes(key as any)) return
+		const originalKey  = e.key.toLowerCase();
+		const physicalKey = reverseKeyBindings[originalKey] || originalKey;
+		const actionKey = keyBindings[physicalKey] || physicalKey;
 
-		for (const validKey of VALID_INPUTS)
-			if (key === validKey) tileInputs[key].forEach(fn => fn())
+    if (!VALID_INPUTS.includes(actionKey as any)) return;
+	
+	tileInputs[physicalKey.toLowerCase() as InputKey].forEach(f => f())
 
 		afterInputs.forEach(f => f())
 
