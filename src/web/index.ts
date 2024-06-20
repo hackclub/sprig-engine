@@ -135,7 +135,6 @@ export function webEngine(canvas: HTMLCanvasElement): {
 	}
 	const afterInputs: (() => void)[] = []
 	const keyBindings = JSON.parse(getCookie('keyBindings') || '{}');
-	console.log(keyBindings)
 	if(Object.keys(keyBindings).length === 0) {
 		document.cookie = `keyBindings=${JSON.stringify({
 			w: 'w',
