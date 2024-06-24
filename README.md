@@ -1,4 +1,5 @@
-# 👾 Sprig Engine 👾
+# [DEPRICATED] 👾 Sprig Engine 👾
+# Now located at: [hackclub/sprig/engine](https://github.com/hackclub/sprig/tree/main/engine)
 
 [Sprig](https://github.com/hackclub/sprig/) is an open source game console, web-based game editor, and hardware development kit.
 
